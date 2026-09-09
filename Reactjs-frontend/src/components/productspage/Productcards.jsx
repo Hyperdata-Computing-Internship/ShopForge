@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useRef } from "react";
+import style from './Productcard.module.css'
 
 const Productcards = (prop) => {
   const containerRef = useRef(null);
@@ -45,21 +46,21 @@ const Productcards = (prop) => {
   }, []);
 
   return (
-      <div className="container" ref={containerRef}>
-        <div className="card" ref={cardRef}>
-          <h1 className="title" ref={titleRef}>
+      <div className={style.container} ref={containerRef}>
+        <div className={style.card} ref={cardRef}>
+          <h1 className={style.title} ref={titleRef}>
             {prop.title}
           </h1>
 
-          <div className="shoes">
+          <div className={style.shoes}>
             <img src={prop.image} />
           </div>
 
-          <div className="info">
+          <div className={style.info}>
             <h3>{prop.description}</h3>
           </div>
 
-          <div className="purchase">
+          <div className={style.purchase}>
             <button>Purchase</button>
             <button>Add to cart</button>
           </div>
