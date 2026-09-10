@@ -52,7 +52,7 @@ const Productcards = (prop) => {
             {prop.title}
           </h1>
 
-          <div className={style.shoes}>
+          <div  lassName={style.shoes}>
             <img src={prop.image} />
           </div>
 
