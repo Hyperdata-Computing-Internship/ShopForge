@@ -1,27 +1,34 @@
 import React from 'react'
-// import style from './login.module.css'
+import style from './login.module.css'
+import { useState } from "react";
 
-const Login = () => {
+const Login = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  function togglePassword() {
+    setShowPassword(!showPassword);
+  }
+
   return (
-    <div class="login-container">
+    <div className={style.logincontainer}>
 
-      <div class="left-section">
-        <img src="" alt="Dashboard illustration" />
+      <div className={style.leftsection}>
+        <img src='../public/loginpageimage.jpg' alt="Dashboard illustration" />
       </div>
 
-      <div class="right-section">
+      <div className={style.rightsection}>
 
-        <div class="logo">
-          <div class="logo-icon">🛒</div>
-          <span>DN Spurt</span>
+        <div className={style.logo}>
+          <div className={style.logoicon}>🛒</div>
+          <span>ShopForge</span>
         </div>
 
         <h1>Welcome Back</h1>
-        <p class="subtitle">Please login to your account</p>
+        <p className={style.subtitle}>Please login to your account</p>
 
         <form>
 
-          <label for="email">Email address</label>
+          <label className={style.email}>Email address</label>
           <input
             type="email"
             id="email"
@@ -29,46 +36,29 @@ const Login = () => {
           />
 
           <label for="password">Password</label>
-          <div class="password-box">
+          <div className={style.passwordbox}>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               placeholder="Enter your password"
             />
-            <span>👁</span>
+            <button type="button" onClick={togglePassword}>
+              {showPassword ? "🙈" : "👁"}
+            </button>
           </div>
 
-          <div class="forgot">
+          <div className={style.forgot}>
             <a href="#">Forgot Password?</a>
           </div>
 
           <button type="submit">Login</button>
 
-          <div class="divider">
-            <span></span>
-            <p>Or Login With</p>
-            <span></span>
-          </div>
-
-          <div class="social-buttons">
-            <button type="button">
-              🔴 Google
-            </button>
-
-            <button type="button">
-              🔵 Facebook
-            </button>
-          </div>
-
-          <p class="signup">
+          <p className={style.signup}>
             Don't have an account?
             <a href="#">Sign up</a>
           </p>
-
         </form>
-
       </div>
-
     </div>
 
   )

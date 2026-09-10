@@ -14,7 +14,7 @@ body {
     align-items: center;
 }
 
-.login-container {
+.logincontainer {
     width: 850px;
     min-height: 500px;
 
@@ -31,7 +31,7 @@ body {
 
 /* LEFT */
 
-.left-section {
+.leftsection {
     width: 50%;
     background: #0868df;
 
@@ -44,7 +44,7 @@ body {
     justify-content: center;
 }
 
-.left-section img {
+.leftsection img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -52,7 +52,7 @@ body {
 
 /* RIGHT */
 
-.right-section {
+.rightsection {
     width: 50%;
 
     display: flex;
@@ -75,7 +75,7 @@ body {
     margin-bottom: 18px;
 }
 
-.logo-icon {
+.logoicon {
     width: 28px;
     height: 28px;
 
@@ -132,16 +132,17 @@ input {
     margin-bottom: 15px;
 }
 
-.password-box {
+.passwordbox {
     position: relative;
 }
 
-.password-box input {
+.passwordbox input {
     margin-bottom: 5px;
 }
 
-.password-box span {
+.passwordbox button {
     position: absolute;
+    border: none;
 
     right: 12px;
     top: 11px;
