@@ -2,7 +2,7 @@ import React from 'react'
 import style from './login.module.css'
 import { useState } from "react";
 
-const Login = (props) => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   function togglePassword() {
@@ -55,7 +55,7 @@ const Login = (props) => {
 
           <p className={style.signup}>
             Don't have an account?
-            <a href="#">Sign up</a>
+            <a href="/signup">Sign up</a>
           </p>
         </form>
       </div>
