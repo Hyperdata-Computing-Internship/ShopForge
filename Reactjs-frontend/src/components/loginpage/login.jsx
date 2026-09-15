@@ -13,7 +13,7 @@ const Login = () => {
     <div className={style.logincontainer}>
 
       <div className={style.leftsection}>
-        <img src='../public/loginpageimage.jpg' alt="Dashboard illustration" />
+        <img src='/loginpageimage.jpg' alt="Dashboard illustration" />
       </div>
 
       <div className={style.rightsection}>
