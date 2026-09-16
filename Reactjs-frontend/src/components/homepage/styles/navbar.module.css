@@ -1,523 +1,252 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap');
-
-.strataScope,
-.strataScope * {
-    box-sizing: border-box;
+.navbar {
+  width: 100%;
+  border-bottom: 1px solid #e5e7eb;
+  background: #ffffff;
+  position: absolute;
+  top: 0%;
 }
 
-.strataScope {
-    --ink: #14171C;
-    --paper: #F5F6F4;
-    --navy: #1F2A44;
-    --navy-soft: #2E3B5C;
-    --gold: #B08D3F;
-    --line: #E3E1DB;
-    --muted: #767267;
-
-    font-family: 'Manrope', sans-serif;
-    color: var(--ink);
+.navbarInner {
+  max-width: 100%;
+  height: 64px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.strataScope *:focus-visible {
-    outline: 2px solid var(--navy);
-    outline-offset: 2px;
-    border-radius: 6px;
+/* Logo */
+.navbarLogo {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #000;
+  text-decoration: none;
 }
 
-/* Navbar shell */
+/* Desktop links */
+.navbarLinks {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
 
-.strataNavbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
+.navLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
 
+.navLink:hover,
+.navLink.active {
+  color: #000;
+}
+
+/* Categories dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdownToggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  cursor: pointer;
+}
+
+.dropdownToggle:hover {
+  color: #000;
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.15s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 176px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  z-index: 50;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #374151;
+  text-decoration: none;
+}
+
+.dropdownItem:hover {
+  background: #f3f4f6;
+}
+
+/* Desktop actions */
+.navbarActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  color: #4b5563;
+  text-decoration: none;
+}
+
+.iconBtn:hover {
+  background: #f3f4f6;
+  color: #000;
+}
+
+.iconBtn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: center;
+}
+
+.loginBtn {
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.loginBtn:hover {
+  background: #262626;
+}
+
+/* Mobile-only elements (hidden on desktop) */
+.navbarMobileActions,
+.hamburgerBtn {
+  display: none;
+}
+
+/* Mobile menu panel */
+.mobileMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+  padding: 16px 20px;
+}
+
+.mobileLink {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+  text-decoration: none;
+}
+
+.mobileLink.sub {
+  color: #4b5563;
+  font-weight: 400;
+}
+
+.mobileLink:hover {
+  background: #f3f4f6;
+}
+
+.mobileSectionLabel {
+  margin: 8px 0 0;
+  padding: 0 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.mobileLoginBtn {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Responsive breakpoint */
+@media (max-width: 767px) {
+  .navbarLinks,
+  .navbarActions {
+    display: none;
+  }
+
+  .navbarMobileActions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 6px;
+  }
 
-    padding: 18px clamp(20px, 5vw, 64px);
-
-    background: rgba(245, 246, 244, 0.55);
-    backdrop-filter: blur(8px);
-
-    border-bottom: 1px solid transparent;
-
-    transition:
-        background-color .35s ease,
-        padding .35s ease,
-        border-color .35s ease,
-        box-shadow .35s ease;
-}
-
-.strataNavbar.isScrolled {
-    background: rgba(255, 255, 255, 0.92);
-    border-bottom-color: var(--line);
-    box-shadow: 0 12px 30px -20px rgba(20, 23, 28, 0.35);
-
-    padding: 12px clamp(20px, 5vw, 64px);
-}
-
-.strataLogo {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 22px;
-    letter-spacing: 0.04em;
-
-    color: var(--ink);
-    text-decoration: none;
-}
-
-/* Center nav + magnetic indicator */
-
-.strataNav {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    gap: 4px;
-
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.strataNavIndicator {
-    position: absolute;
-
-    top: 0;
-    left: 0;
-
-    height: 100%;
-
-    background: var(--navy);
-    border-radius: 8px;
-
-    transition:
-        transform .28s cubic-bezier(.4, 0, .2, 1),
-        width .28s cubic-bezier(.4, 0, .2, 1),
-        opacity .2s ease;
-
-    z-index: 1;
-    pointer-events: none;
-}
-
-.strataNavItem {
-    position: relative;
-}
-
-.strataNavLink {
-    position: relative;
-    z-index: 2;
-
+  .hamburgerBtn {
     display: inline-flex;
     align-items: center;
-
-    gap: 6px;
-    padding: 10px 16px;
-
-    background: none;
-    border: none;
-
-    font: inherit;
-    font-size: 15px;
-    font-weight: 500;
-
-    color: var(--ink);
-    text-decoration: none;
-
-    cursor: pointer;
-
-    transition: color .2s ease;
-}
-
-.strataNavLink svg {
-    width: 14px;
-    height: 14px;
-}
-
-/* Dropdown */
-
-.strataDropdown {
-    position: absolute;
-
-    top: calc(100% + 14px);
-    left: 0;
-
-    min-width: 300px;
-
-    background: #fff;
-
-    border: 1px solid var(--line);
-    border-radius: 12px;
-
-    box-shadow: 0 24px 48px -24px rgba(20, 23, 28, 0.35);
-
-    padding: 8px;
-
-    opacity: 0;
-    visibility: hidden;
-
-    transform: translateY(-6px);
-
-    transition:
-        opacity .2s ease,
-        transform .2s ease,
-        visibility .2s;
-
-    z-index: 50;
-}
-
-.strataDropdown.isOpen {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.strataDropdownRow {
-    display: flex;
-    align-items: center;
-
-    gap: 14px;
-    padding: 11px 12px;
-
-    border-radius: 8px;
-
-    text-decoration: none;
-    color: var(--ink);
-
-    opacity: 0;
-    transform: translateX(-8px);
-
-    animation: strataRowIn .3s ease forwards;
-
-    transition: background-color .15s ease;
-}
-
-.strataDropdown.isOpen .strataDropdownRow {
-    opacity: 0;
-    transform: translateX(-8px);
-
-    animation: strataRowIn .3s ease forwards;
-}
-
-.strataDropdownRow:hover {
-    background: rgba(31, 42, 68, 0.06);
-}
-
-.strataDropdownRow:hover .strataDropdownIcon {
-    background: var(--navy);
-    color: #fff;
-}
-
-.strataDropdownIcon {
-    flex: none;
-
+    justify-content: center;
     width: 38px;
     height: 38px;
-
     border-radius: 8px;
-
-    background: var(--paper);
-    color: var(--navy);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition:
-        background-color .15s ease,
-        color .15s ease;
-}
-
-.strataDropdownIcon svg {
-    width: 18px;
-    height: 18px;
-}
-
-.strataDropdownText {
-    display: flex;
-    flex-direction: column;
-
-    gap: 1px;
-}
-
-.strataDropdownLabel {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.strataDropdownDesc {
-    font-size: 12px;
-    color: var(--muted);
-}
-
-@keyframes strataRowIn {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Actions */
-
-.strataActions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.strataCartBtn {
-    position: relative;
-
-    width: 42px;
-    height: 42px;
-
-    border-radius: 10px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    background: transparent;
-    border: 1px solid transparent;
-
-    color: var(--ink);
-
-    cursor: pointer;
-
-    transition:
-        background-color .2s ease,
-        border-color .2s ease,
-        transform .2s ease;
-}
-
-.strataCartBtn:hover {
-    background: var(--paper);
-    border-color: var(--line);
-
-    transform: translateY(-1px);
-}
-
-.strataCartBtn svg {
-    width: 20px;
-    height: 20px;
-}
-
-.strataCartBadge {
-    position: absolute;
-
-    top: 1px;
-    right: 1px;
-
-    min-width: 16px;
-    height: 16px;
-
-    padding: 0 3px;
-
-    border-radius: 999px;
-
-    background: var(--gold);
-    color: #fff;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    line-height: 16px;
-    text-align: center;
-
-    animation: strataPop .4s cubic-bezier(.34, 1.56, .64, 1);
-}
-
-@keyframes strataPop {
-    0% {
-        transform: scale(.4);
-    }
-
-    60% {
-        transform: scale(1.2);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* Hamburger */
-
-.strataHamburger {
-    display: none;
-
-    width: 42px;
-    height: 42px;
-
-    border-radius: 10px;
-
-    background: transparent;
-    border: 1px solid transparent;
-
-    align-items: center;
-    justify-content: center;
-
-    color: var(--ink);
-
-    cursor: pointer;
-}
-
-.strataHamburger svg {
-    width: 20px;
-    height: 20px;
-}
-
-/* Entrance animation */
-
-.strataFadeIn {
-    opacity: 0;
-
-    animation:
-        strataFadeSlideDown .5s cubic-bezier(.16, 1, .3, 1) forwards;
-}
-
-@keyframes strataFadeSlideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Mobile panel */
-
-.strataMobile {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-    right: 0;
-
-    z-index: 90;
-
-    background: #fff;
-
-    border-bottom: 1px solid var(--line);
-
-    padding: 88px 24px 20px;
-
-    transform: translateY(-100%);
-    opacity: 0;
-
-    transition:
-        transform .3s ease,
-        opacity .3s ease;
-
-    display: none;
-}
-
-.strataMobile.isOpen {
-    transform: translateY(0);
-    opacity: 1;
-}
-
-.strataMobileProductsToggle {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 14px 4px;
-
     background: none;
     border: none;
-    border-bottom: 1px solid var(--line);
-
-    font: inherit;
-    font-size: 16px;
-    font-weight: 600;
-
-    color: var(--ink);
-
+    color: #374151;
     cursor: pointer;
-}
+  }
 
-.strataMobileProductsToggle svg {
-    width: 16px;
-    height: 16px;
-}
-
-.strataMobileSubmenu {
-    max-height: 0;
-
-    overflow: hidden;
-
-    transition: max-height .3s ease;
-}
-
-.strataMobileSubmenu.isOpen {
-    max-height: 220px;
-}
-
-.strataMobileSublink {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-    padding: 12px 4px;
-
-    color: var(--ink);
-    text-decoration: none;
-
-    font-size: 15px;
-}
-
-.strataMobileSublink svg {
-    width: 18px;
-    height: 18px;
-
-    color: var(--navy);
-}
-
-.strataMobileLink {
-    display: block;
-
-    padding: 14px 4px;
-
-    color: var(--ink);
-    text-decoration: none;
-
-    font-size: 16px;
-    font-weight: 600;
-}
-
-/* Responsive */
-
-@media (max-width: 720px) {
-
-    .strataNav {
-        display: none;
-    }
-
-    .strataHamburger {
-        display: inline-flex;
-    }
-
-    .strataMobile {
-        display: block;
-    }
-}
-
-/* Reduced motion */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .strataScope * {
-        animation: none !important;
-        transition: none !important;
-    }
+  .hamburgerBtn svg {
+    width: 22px;
+    height: 22px;
+  }
 }

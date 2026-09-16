@@ -1,312 +1,130 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
-import style from './styles/navbar.module.css';
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import style from "./styles/navbar.module.css";
 
-/* -------------------------------------------------------------------- */
-/*  Icons — small hand-drawn line icons, no external icon library       */
-/* -------------------------------------------------------------------- */
+function Navbar({ cartCount = 0 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
 
-const ShirtIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8.5 4 4.5 7 6.5 10 8.5 8.3V20h7V8.3L17.5 10l2-3-4-3-2 1.4h-3z" />
-    </svg>
-);
+  const linkClass = ({ isActive }) =>
+    `${style.navLink}${isActive ? ` ${style.active}` : ""}`;
 
-const PantsIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6.5 3.5h11l-.8 16.5h-3.6L12.3 9.8l-.9 10.2H7.3z" />
-    </svg>
-);
+  return (
+    <nav className={style.navbar}>
+      <div className={style.navbarInner}>
+        {/* Logo */}
+        <Link to="/" className={style.navbarLogo}>
+          STRATA
+        </Link>
 
-const ShoeIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3.5 17.2c0-2 1.8-3.2 3.7-3.2h1.9l2.2-3 4 1.1 1.1 2.1h3.6c1.2 0 1.5 1.6.7 2.6-.5.7-1.4 1.2-2.4 1.2H4.3c-.5 0-.8-.3-.8-.8z" />
-        <path d="M3.5 17.2h17" />
-    </svg>
-);
+        {/* Desktop links */}
+        <div className={style.navbarLinks}>
+          <NavLink to="/" className={linkClass}>Home</NavLink>
+          <NavLink to="/products" className={linkClass}>Shop</NavLink>
 
-const BagIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 8h12l-1 12H7z" />
-        <path d="M9 8V6.5a3 3 0 0 1 6 0V8" />
-    </svg>
-);
-
-const ChevronIcon = ({ open }) => (
-    <svg
-        viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
-        style={{ transform: open ? "rotate(180deg)" : "rotate(0deg)", transition: "transform .25s ease" }}
-    >
-        <path d="M6 9l6 6 6-6" />
-    </svg>
-);
-
-const MenuIcon = ({ open }) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-        {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
-    </svg>
-);
-
-/* -------------------------------------------------------------------- */
-/*  Data                                                                 */
-/* -------------------------------------------------------------------- */
-
-const CATEGORIES = [
-    { id: "shirts", label: "Shirts", desc: "Everyday & formal fits", Icon: ShirtIcon, href: '/products/shirts' },
-    { id: "pants", label: "Pants", desc: "Denim, chino & trousers", Icon: PantsIcon, href: '/products/pants' },
-    { id: "shoes", label: "Shoes", desc: "Sneakers & formal wear", Icon: ShoeIcon, href: '/products/shoes' },
-];
-
-const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
-    const [hoveredId, setHoveredId] = useState(null);
-    const [indicator, setIndicator] = useState({ left: 0, width: 0, opacity: 0 });
-    const [cartCount, setCartCount] = useState(2);
-    const [popKey, setPopKey] = useState(0);
-
-    const navRef = useRef(null);
-    const itemRefs = useRef({});
-    const closeTimer = useRef(null);
-
-    // scroll -> glass to solid
-    useEffect(() => {
-        const onScroll = () => setIsScrolled(window.scrollY > 8);
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
-
-    // close mobile panel on wide viewport
-    useEffect(() => {
-        const onResize = () => { if (window.innerWidth > 720) setMobileOpen(false); };
-        window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
-    }, []);
-
-    const moveIndicatorTo = useCallback((id) => {
-        const el = itemRefs.current[id];
-        if (!el) return;
-        setIndicator({ left: el.offsetLeft, width: el.offsetWidth, opacity: 1 });
-        setHoveredId(id);
-    }, []);
-
-    const hideIndicator = () => {
-        setIndicator((prev) => ({ ...prev, opacity: 0 }));
-        setHoveredId(null);
-    };
-
-    const openDropdown = () => {
-        clearTimeout(closeTimer.current);
-        setDropdownOpen(true);
-    };
-    const scheduleClose = () => {
-        clearTimeout(closeTimer.current);
-        closeTimer.current = setTimeout(() => setDropdownOpen(false), 150);
-    };
-
-    const onKeyDownProducts = (e) => {
-        if (e.key === "Escape") setDropdownOpen(false);
-        if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            setDropdownOpen((v) => !v);
-        }
-    };
-
-    const bumpCart = () => {
-        setCartCount((c) => c + 1);
-        setPopKey((k) => k + 1);
-    };
-
-    return (
-        <div className={style.strataScope}>
-            <nav className={`${style.strataNavbar} ${isScrolled ? style.isScrolled : ""}`}>
-                <Link
-                    to='/'
-                    className={`${style.strataLogo} ${style.strataFadeIn}`}
-                    style={{ animationDelay: "0ms" }}
-                >
-                    STRATA
-                </Link>
-
-                <ul
-                    className={style.strataNav}
-                    ref={navRef}
-                    onMouseLeave={() => {
-                        hideIndicator();
-                        scheduleClose();
-                    }}
-                >
-                    <span
-                        className={style.strataNavIndicator}
-                        style={{
-                            transform: `translateX(${indicator.left}px)`,
-                            width: indicator.width,
-                            opacity: indicator.opacity,
-                        }}
-                    />
-
-                    <li
-                        className={`${style.strataNavItem} ${style.strataFadeIn}`}
-                        style={{ animationDelay: "60ms" }}
-                        onMouseEnter={() => {
-                            moveIndicatorTo("products");
-                            openDropdown();
-                        }}
-                    >
-                        <button
-                            type="button"
-                            ref={(el) => (itemRefs.current.products = el)}
-                            className={style.strataNavLink}
-                            style={{
-                                color:
-                                    hoveredId === "products" || dropdownOpen
-                                        ? "#fff"
-                                        : undefined,
-                            }}
-                            aria-haspopup="true"
-                            aria-expanded={dropdownOpen}
-                            onClick={() => setDropdownOpen((v) => !v)}
-                            onKeyDown={onKeyDownProducts}
-                        >
-                            Products
-                            <ChevronIcon open={dropdownOpen} />
-                        </button>
-
-                        <div
-                            className={`${style.strataDropdown} ${dropdownOpen ? style.isOpen : ""
-                                }`}
-                            onMouseEnter={openDropdown}
-                            onMouseLeave={scheduleClose}
-                            role="menu"
-                        >
-                            {CATEGORIES.map((cat, i) => (
-                                <Link
-                                    key={cat.id}
-                                    to={cat.href}
-                                    role="menuitem"
-                                    className={style.strataDropdownRow}
-                                    style={{
-                                        animationDelay: dropdownOpen
-                                            ? `${80 + i * 60}ms`
-                                            : "0ms",
-                                    }}
-                                >
-                                    <span className={style.strataDropdownIcon}>
-                                        <cat.Icon />
-                                    </span>
-
-                                    <span className={style.strataDropdownText}>
-                                        <span className={style.strataDropdownLabel}>
-                                            {cat.label}
-                                        </span>
-
-                                        <span className={style.strataDropdownDesc}>
-                                            {cat.desc}
-                                        </span>
-                                    </span>
-                                </Link>
-                            ))}
-                        </div>
-                    </li>
-
-                    <li
-                        className={`${style.strataNavItem} ${style.strataFadeIn}`}
-                        style={{ animationDelay: "110ms" }}
-                        onMouseEnter={() => {
-                            moveIndicatorTo("offers");
-                            scheduleClose();
-                        }}
-                    >
-                        <Link
-                            to='/offers'
-                            ref={(el) => (itemRefs.current.offers = el)}
-                            className={style.strataNavLink}
-                            style={{
-                                color:
-                                    hoveredId === "offers"
-                                        ? "#fff"
-                                        : undefined,
-                            }}
-                        >
-                            Offers
-                        </Link>
-                    </li>
-                </ul>
-
-                <div className={style.strataActions}>
-                    <button
-                        type="button"
-                        className={`${style.strataCartBtn} ${style.strataFadeIn}`}
-                        style={{ animationDelay: "150ms" }}
-                        aria-label={`Cart, ${cartCount} items`}
-                        onClick={bumpCart}
-                        title="Demo: click to bump the cart count"
-                    >
-                        <BagIcon />
-                        <span
-                            className={style.strataCartBadge}
-                            key={popKey}
-                        >
-                            {cartCount}
-                        </span>
-                    </button>
-
-                    <button
-                        type="button"
-                        className={`${style.strataHamburger} ${style.strataFadeIn}`}
-                        style={{ animationDelay: "150ms" }}
-                        aria-label="Toggle menu"
-                        aria-expanded={mobileOpen}
-                        onClick={() => setMobileOpen((v) => !v)}
-                    >
-                        <MenuIcon open={mobileOpen} />
-                    </button>
-                </div>
-            </nav>
-
-            {/* Mobile panel */}
-            <div
-                className={`${style.strataMobile} ${mobileOpen ? style.isOpen : ""
-                    }`}
+          <div
+            className={style.dropdown}
+            onMouseLeave={() => setCategoriesOpen(false)}
+          >
+            <button
+              type="button"
+              className={style.dropdownToggle}
+              aria-expanded={categoriesOpen}
+              onClick={() => setCategoriesOpen((v) => !v)}
             >
-                <button
-                    type="button"
-                    className={style.strataMobileProductsToggle}
-                    aria-expanded={mobileProductsOpen}
-                    onClick={() => setMobileProductsOpen((v) => !v)}
-                >
-                    Products
-                    <ChevronIcon open={mobileProductsOpen} />
-                </button>
+              Categories
+              <svg
+                className={`${style.chevron}${categoriesOpen ? ` ${style.open}` : ""}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
-                <div
-                    className={`${style.strataMobileSubmenu} ${mobileProductsOpen ? style.isOpen : ""
-                        }`}
-                >
-                    {CATEGORIES.map((cat) => (
-                        <Link
-                            key={cat.id}
-                            to={cat.href}
-                            className={style.strataMobileSublink}
-                        >
-                            <cat.Icon /> {cat.label}
-                        </Link>
-                    ))}
-                </div>
+            {categoriesOpen && (
+              <div className={style.dropdownMenu}>
+                <Link to="/shirts" className={style.dropdownItem} onClick={() => setCategoriesOpen(false)}>Shirts</Link>
+                <Link to="/pants" className={style.dropdownItem} onClick={() => setCategoriesOpen(false)}>Pants</Link>
+                <Link to="/shoes" className={style.dropdownItem} onClick={() => setCategoriesOpen(false)}>Shoes</Link>
+              </div>
+            )}
+          </div>
 
-                <Link
-                    to='/offers'
-                    className={style.strataMobileLink}
-                >
-                    Offers
-                </Link>
-            </div>
+          <NavLink to="/offers" className={linkClass}>Offers</NavLink>
+          <NavLink to="/about" className={linkClass}>About</NavLink>
         </div>
-    )
+
+        {/* Desktop actions */}
+        <div className={style.navbarActions}>
+          <Link to="/search" className={style.iconBtn} aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" />
+            </svg>
+          </Link>
+
+          <Link to="/cart" className={style.iconBtn} aria-label={`Cart with ${cartCount} items`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H6" />
+              <circle cx="10" cy="20" r="1.5" />
+              <circle cx="18" cy="20" r="1.5" />
+            </svg>
+            {cartCount > 0 && <span className={style.cartBadge}>{cartCount}</span>}
+          </Link>
+
+          <Link to="/login" className={style.loginBtn}>Login</Link>
+        </div>
+
+        {/* Mobile actions */}
+        <div className={style.navbarMobileActions}>
+          <Link to="/cart" className={style.iconBtn} aria-label={`Cart with ${cartCount} items`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l2.4 11.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L21 7H6" />
+              <circle cx="10" cy="20" r="1.5" />
+              <circle cx="18" cy="20" r="1.5" />
+            </svg>
+            {cartCount > 0 && <span className={style.cartBadge}>{cartCount}</span>}
+          </Link>
+
+          <button
+            type="button"
+            className={style.hamburgerBtn}
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              {menuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className={style.mobileMenu}>
+          <NavLink to="/" className={style.mobileLink} onClick={() => setMenuOpen(false)}>Home</NavLink>
+          <NavLink to="/products" className={style.mobileLink} onClick={() => setMenuOpen(false)}>Shop</NavLink>
+
+          <p className={style.mobileSectionLabel}>Categories</p>
+          <NavLink to="/shirts" className={`${style.mobileLink} ${style.sub}`} onClick={() => setMenuOpen(false)}>Shirts</NavLink>
+          <NavLink to="/pants" className={`${style.mobileLink} ${style.sub}`} onClick={() => setMenuOpen(false)}>Pants</NavLink>
+          <NavLink to="/shoes" className={`${style.mobileLink} ${style.sub}`} onClick={() => setMenuOpen(false)}>Shoes</NavLink>
+
+          <NavLink to="/offers" className={style.mobileLink} onClick={() => setMenuOpen(false)}>Offers</NavLink>
+          <NavLink to="/about" className={style.mobileLink} onClick={() => setMenuOpen(false)}>About</NavLink>
+
+          <Link to="/login" className={style.mobileLoginBtn} onClick={() => setMenuOpen(false)}>Login</Link>
+        </div>
+      )}
+    </nav>
+  );
 }
 
-
-export default Navbar
+export default Navbar;

@@ -9,7 +9,7 @@ import Homepage from './components/homepage/homepage';
 const App = () => {
   return (
     <div>
-      <Navbar/>
+      <Navbar cartcount={5}/>
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
