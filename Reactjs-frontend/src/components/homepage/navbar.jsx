@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import style from './styles/navbar.module.css';
+import { Link } from "react-router-dom";
 
 /* -------------------------------------------------------------------- */
 /*  Icons — small hand-drawn line icons, no external icon library       */
@@ -51,9 +52,9 @@ const MenuIcon = ({ open }) => (
 /* -------------------------------------------------------------------- */
 
 const CATEGORIES = [
-    { id: "shirts", label: "Shirts", desc: "Everyday & formal fits", Icon: ShirtIcon, href: "/products/shirts" },
-    { id: "pants", label: "Pants", desc: "Denim, chino & trousers", Icon: PantsIcon, href: "/products/pants" },
-    { id: "shoes", label: "Shoes", desc: "Sneakers & formal wear", Icon: ShoeIcon, href: "/products/shoes" },
+    { id: "shirts", label: "Shirts", desc: "Everyday & formal fits", Icon: ShirtIcon, href: '/products/shirts' },
+    { id: "pants", label: "Pants", desc: "Denim, chino & trousers", Icon: PantsIcon, href: '/products/pants' },
+    { id: "shoes", label: "Shoes", desc: "Sneakers & formal wear", Icon: ShoeIcon, href: '/products/shoes' },
 ];
 
 const Navbar = () => {
@@ -122,13 +123,13 @@ const Navbar = () => {
     return (
         <div className={style.strataScope}>
             <nav className={`${style.strataNavbar} ${isScrolled ? style.isScrolled : ""}`}>
-                <a
-                    href="/"
+                <Link
+                    to='/'
                     className={`${style.strataLogo} ${style.strataFadeIn}`}
                     style={{ animationDelay: "0ms" }}
                 >
                     STRATA
-                </a>
+                </Link>
 
                 <ul
                     className={style.strataNav}
@@ -182,9 +183,9 @@ const Navbar = () => {
                             role="menu"
                         >
                             {CATEGORIES.map((cat, i) => (
-                                <a
+                                <Link
                                     key={cat.id}
-                                    href={cat.href}
+                                    to={cat.href}
                                     role="menuitem"
                                     className={style.strataDropdownRow}
                                     style={{
@@ -206,7 +207,7 @@ const Navbar = () => {
                                             {cat.desc}
                                         </span>
                                     </span>
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </li>
@@ -219,8 +220,8 @@ const Navbar = () => {
                             scheduleClose();
                         }}
                     >
-                        <a
-                            href="/offers"
+                        <Link
+                            to='/offers'
                             ref={(el) => (itemRefs.current.offers = el)}
                             className={style.strataNavLink}
                             style={{
@@ -231,7 +232,7 @@ const Navbar = () => {
                             }}
                         >
                             Offers
-                        </a>
+                        </Link>
                     </li>
                 </ul>
 
@@ -286,22 +287,22 @@ const Navbar = () => {
                         }`}
                 >
                     {CATEGORIES.map((cat) => (
-                        <a
+                        <Link
                             key={cat.id}
-                            href={cat.href}
+                            to={cat.href}
                             className={style.strataMobileSublink}
                         >
                             <cat.Icon /> {cat.label}
-                        </a>
+                        </Link>
                     ))}
                 </div>
 
-                <a
-                    href="/offers"
+                <Link
+                    to='/offers'
                     className={style.strataMobileLink}
                 >
                     Offers
-                </a>
+                </Link>
             </div>
         </div>
     )

@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './signup.module.css'
+import { Link } from 'react-router-dom'
 
 const Signup = () => {
   return (
@@ -89,7 +90,7 @@ const Signup = () => {
 
             <p className={style.logintext}>
               Already have an account?
-              <a href="#">Login</a>
+              <Link to='/login'>Login</Link>
             </p>
 
           </form>

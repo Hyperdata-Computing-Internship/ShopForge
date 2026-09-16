@@ -1,6 +1,7 @@
 import React from 'react'
 import style from './login.module.css'
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,7 +56,7 @@ const Login = () => {
 
           <p className={style.signup}>
             Don't have an account?
-            <a href="/signup">Sign up</a>
+            <Link to='/signup'>Sign up</Link>
           </p>
         </form>
       </div>
