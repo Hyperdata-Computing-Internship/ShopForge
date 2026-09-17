@@ -122,10 +122,8 @@ const valueProps = [
 const Homepage = () => {
   return (
     <div className="w-full bg-neutral-50 text-neutral-900">
-      {/* 1. HERO CAROUSEL */}
       <Crousal />
 
-      {/* 2. VALUE PROPOSITIONS BAR */}
       <section className="border-b border-neutral-200 bg-white py-8">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -144,7 +142,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* 3. CATEGORIES SHOWCASE */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
           <div>
@@ -188,7 +185,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* 4. FEATURED PRODUCTS (Using user's Productcards component!) */}
       <section className="bg-white py-16 border-y border-neutral-200">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center max-w-2xl mx-auto mb-12">
@@ -201,7 +197,6 @@ const Homepage = () => {
             </p>
           </div>
 
-          {/* Product Cards Grid rendering user's Productcards */}
           <div className="flex flex-wrap justify-center items-stretch gap-8">
             {featuredProducts.map((product) => (
               <Productcards
@@ -227,7 +222,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* 5. PROMOTIONAL SALE BANNER */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
         <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-900 via-neutral-900 to-black text-white p-8 sm:p-12 lg:p-16 border border-neutral-800 shadow-xl">
           <div className="relative z-10 max-w-2xl">
@@ -258,7 +252,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* 6. TRENDING / NEW ARRIVALS GRID (Using user's Productcards component!) */}
       <section className="bg-white py-16 border-t border-neutral-200">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
@@ -287,7 +280,6 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/* 7. CUSTOMER TRUST & TESTIMONIALS */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
         <div className="text-center max-w-xl mx-auto mb-12">
           <span className="text-xs font-bold tracking-widest text-blue-600 uppercase">Trusted Community</span>

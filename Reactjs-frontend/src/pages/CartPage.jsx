@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const initialItems = [
+let initialItems = [
   {
     id: 1,
     title: 'Oxford Leather Brogues',
@@ -30,6 +30,10 @@ const initialItems = [
     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
   },
 ];
+
+export const addItem=(item)=>{
+  initialItems
+};
 
 const CartPage = () => {
   const [items, setItems] = useState(initialItems);

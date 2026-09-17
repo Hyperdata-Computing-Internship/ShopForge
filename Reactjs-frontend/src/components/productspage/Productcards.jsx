@@ -52,7 +52,7 @@ const Productcards = (prop) => {
             {prop.title}
           </h1>
 
-          <div  lassName={style.shoes}>
+          <div className={style.shoes}>
             <img src={prop.image} />
           </div>
 
@@ -62,7 +62,9 @@ const Productcards = (prop) => {
 
           <div className={style.purchase}>
             <button>Purchase</button>
-            <button>Add to cart</button>
+            <button onClick={()=>{
+              
+            }}>Add to cart</button>
           </div>
         </div>
       </div>

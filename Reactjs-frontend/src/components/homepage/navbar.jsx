@@ -12,12 +12,10 @@ function Navbar({ cartCount = 0 }) {
   return (
     <nav className={style.navbar}>
       <div className={style.navbarInner}>
-        {/* Logo */}
         <Link to="/" className={style.navbarLogo}>
           STRATA
         </Link>
 
-        {/* Desktop links */}
         <div className={style.navbarLinks}>
           <NavLink to="/" className={linkClass}>Home</NavLink>
           <NavLink to="/products" className={linkClass}>Shop</NavLink>
@@ -57,7 +55,6 @@ function Navbar({ cartCount = 0 }) {
           <NavLink to="/about" className={linkClass}>About</NavLink>
         </div>
 
-        {/* Desktop actions */}
         <div className={style.navbarActions}>
           <Link to="/search" className={style.iconBtn} aria-label="Search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -77,7 +74,6 @@ function Navbar({ cartCount = 0 }) {
           <Link to="/login" className={style.loginBtn}>Login</Link>
         </div>
 
-        {/* Mobile actions */}
         <div className={style.navbarMobileActions}>
           <Link to="/cart" className={style.iconBtn} aria-label={`Cart with ${cartCount} items`}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -106,7 +102,6 @@ function Navbar({ cartCount = 0 }) {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div className={style.mobileMenu}>
           <NavLink to="/" className={style.mobileLink} onClick={() => setMenuOpen(false)}>Home</NavLink>

@@ -1,23 +1,53 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Login from "./components/loginpage/login";
-import Productcards from './components/productspage/Productcards'
-import Signup from './components/loginpage/signup';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Navbar from './components/homepage/navbar';
+import Footer from './components/homepage/footer';
 import Homepage from './components/homepage/homepage';
+import Login from './components/loginpage/login';
+import Signup from './components/loginpage/signup';
+import ProductsPage from './pages/ProductsPage';
+import CartPage from './pages/CartPage';
+import CheckoutPage from './pages/CheckoutPage';
+import AboutPage from './pages/AboutPage';
+import SearchPage from './pages/SearchPage';
+import NotFound from './pages/Notfound';
 
 const App = () => {
-  return (
-    <div>
-      <Navbar cartcount={5}/>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/signup' element={<Homepage />} />
-        <Route path='/products' element={<Productcards title="Leather Shoes" description="premium shoes" image="https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png"  />} />
-      </Routes>
-    </div>
-  )
-}
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
 
-export default App
+  return (
+    <div className="min-h-screen flex flex-col bg-neutral-50 text-neutral-900">
+      {/* User's Navbar component */}
+      <Navbar cartCount={3} />
+
+      {/* Main Content Area - with top padding so absolute navbar never clips content */}
+      <main className={`flex-1 ${isAuthPage ? 'pt-16 flex items-center justify-center' : 'pt-16'}`}>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/home" element={<Homepage />} />
+          <Route path="/products" element={<ProductsPage key="all" category="all" />} />
+          <Route path="/shirts" element={<ProductsPage key="shirts" category="shirts" />} />
+          <Route path="/pants" element={<ProductsPage key="pants" category="pants" />} />
+          <Route path="/shoes" element={<ProductsPage key="shoes" category="shoes" />} />
+          <Route path="/offers" element={<ProductsPage key="offers" category="offers" />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/search" element={<SearchPage />} />
+
+          {/* User's authentication components */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+
+          {/* Fallback route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+
+      {/* Footer across store pages (excluding login/signup auth screens) */}
+      {!isAuthPage && <Footer />}
+    </div>
+  );
+};
+
+export default App;
