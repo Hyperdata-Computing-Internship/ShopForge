@@ -1,11 +1,25 @@
-import React from 'react'
-import { useEffect, useRef } from "react";
+import { useEffect, useRef , useState} from "react";
 import style from './Productcard.module.css'
+import allProducts from '../../data/product';
+import { useDispatch, useSelector } from 'react-redux'
+import { add_item } from "../../redux_slices/addtocart";
+
 
 const Productcards = (prop) => {
+
+  const dispatch=useDispatch()
+  const cartarray=useSelector((state)=>state.cart.value)  
+
   const containerRef = useRef(null);
   const cardRef = useRef(null);
   const titleRef = useRef(null);
+
+  const handleAddToCart = (product) => {
+    let newarr=[...cartarray]
+    newarr.push(product)
+    dispatch(add_item(newarr))
+  };
+
 
   useEffect(() => {
   const container = containerRef.current;
@@ -63,7 +77,11 @@ const Productcards = (prop) => {
           <div className={style.purchase}>
             <button>Purchase</button>
             <button onClick={()=>{
-              
+              allProducts.forEach(function(elem){
+                if(prop.id === elem.id){
+                  handleAddToCart(elem)
+                }
+              })
             }}>Add to cart</button>
           </div>
         </div>

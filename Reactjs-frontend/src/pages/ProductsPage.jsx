@@ -1,88 +1,92 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo} from 'react';
 import Productcards from '../components/productspage/Productcards';
+import allProducts from '../data/product'
 
-const allProducts = [
-  {
-    id: 1,
-    title: 'Oxford Leather Brogues',
-    description: 'Handcrafted Italian calfskin leather with durable Blake welt stitching.',
-    category: 'shoes',
-    price: 189,
-    rating: 4.9,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: false,
-  },
-  {
-    id: 2,
-    title: 'Chelsea Suede Boots',
-    description: 'Water-resistant supple suede with dual elastic side gussets.',
-    category: 'shoes',
-    price: 165,
-    rating: 4.8,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: true,
-  },
-  {
-    id: 3,
-    title: 'Minimalist White Sneakers',
-    description: 'Ultra-clean low top silhouette with ergonomic memory-foam insole.',
-    category: 'shoes',
-    price: 120,
-    rating: 4.7,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: false,
-  },
-  {
-    id: 4,
-    title: 'Derby Casual Shoes',
-    description: 'Versatile open-laced derby crafted with premium grain leather.',
-    category: 'shoes',
-    price: 145,
-    rating: 4.6,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: true,
-  },
-  {
-    id: 5,
-    title: 'Oxford Cotton Shirt',
-    description: '100% long-staple organic cotton with tailored collar and mother-of-pearl buttons.',
-    category: 'shirts',
-    price: 85,
-    rating: 4.8,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: true,
-  },
-  {
-    id: 6,
-    title: 'Linen Vacation Shirt',
-    description: 'Lightweight breathable European linen with relaxed Cuban camp collar.',
-    category: 'shirts',
-    price: 75,
-    rating: 4.6,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: false,
-  },
-  {
-    id: 7,
-    title: 'Tailored Stretch Chinos',
-    description: '4-way flexibility twill with concealed stash pocket and tapered ankle fit.',
-    category: 'pants',
-    price: 95,
-    rating: 4.9,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: false,
-  },
-  {
-    id: 8,
-    title: 'Pleated Wool Trousers',
-    description: 'Super-120s virgin wool with classic front pleats and adjustable side waist tabs.',
-    category: 'pants',
-    price: 135,
-    rating: 4.7,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-    isOffer: true,
-  },
-];
+
+
+
+// const allProducts = [
+//   {
+//     id: 1,
+//     title: 'Oxford Leather Brogues',
+//     description: 'Handcrafted Italian calfskin leather with durable Blake welt stitching.',
+//     category: 'shoes',
+//     price: 189,
+//     rating: 4.9,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: false,
+//   },
+//   {
+//     id: 2,
+//     title: 'Chelsea Suede Boots',
+//     description: 'Water-resistant supple suede with dual elastic side gussets.',
+//     category: 'shoes',
+//     price: 165,
+//     rating: 4.8,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: true,
+//   },
+//   {
+//     id: 3,
+//     title: 'Minimalist White Sneakers',
+//     description: 'Ultra-clean low top silhouette with ergonomic memory-foam insole.',
+//     category: 'shoes',
+//     price: 120,
+//     rating: 4.7,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: false,
+//   },
+//   {
+//     id: 4,
+//     title: 'Derby Casual Shoes',
+//     description: 'Versatile open-laced derby crafted with premium grain leather.',
+//     category: 'shoes',
+//     price: 145,
+//     rating: 4.6,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: true,
+//   },
+//   {
+//     id: 5,
+//     title: 'Oxford Cotton Shirt',
+//     description: '100% long-staple organic cotton with tailored collar and mother-of-pearl buttons.',
+//     category: 'shirts',
+//     price: 85,
+//     rating: 4.8,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: true,
+//   },
+//   {
+//     id: 6,
+//     title: 'Linen Vacation Shirt',
+//     description: 'Lightweight breathable European linen with relaxed Cuban camp collar.',
+//     category: 'shirts',
+//     price: 75,
+//     rating: 4.6,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: false,
+//   },
+//   {
+//     id: 7,
+//     title: 'Tailored Stretch Chinos',
+//     description: '4-way flexibility twill with concealed stash pocket and tapered ankle fit.',
+//     category: 'pants',
+//     price: 95,
+//     rating: 4.9,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: false,
+//   },
+//   {
+//     id: 8,
+//     title: 'Pleated Wool Trousers',
+//     description: 'Super-120s virgin wool with classic front pleats and adjustable side waist tabs.',
+//     category: 'pants',
+//     price: 135,
+//     rating: 4.7,
+//     image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
+//     isOffer: true,
+//   },
+// ];
 
 const ProductsPage = ({ category: defaultCategory = 'all' }) => {
   const [selectedCategory, setSelectedCategory] = useState(defaultCategory);
@@ -152,8 +156,8 @@ const ProductsPage = ({ category: defaultCategory = 'all' }) => {
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition cursor-pointer ${activeCategory === cat
-                    ? 'bg-black text-white shadow-sm'
-                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+                  ? 'bg-black text-white shadow-sm'
+                  : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                   }`}
               >
                 {cat === 'offers' ? '🔥 Offers' : cat}
@@ -210,7 +214,7 @@ const ProductsPage = ({ category: defaultCategory = 'all' }) => {
           <div className="flex flex-wrap justify-center items-stretch gap-8">
             {filteredProducts.map((product) => (
               <Productcards
-                key={product.id}
+                id={product.id}
                 title={product.title}
                 description={product.description}
                 image={product.image}

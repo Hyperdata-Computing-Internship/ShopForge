@@ -1,42 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import {useSelector } from 'react-redux'
 
-let initialItems = [
-  {
-    id: 1,
-    title: 'Oxford Leather Brogues',
-    size: 'EU 43 / US 10',
-    color: 'Cognac Tan',
-    price: 189,
-    quantity: 1,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-  },
-  {
-    id: 2,
-    title: 'Oxford Cotton Shirt',
-    size: 'M / Slim Fit',
-    color: 'Classic White',
-    price: 85,
-    quantity: 2,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-  },
-  {
-    id: 3,
-    title: 'Tailored Stretch Chinos',
-    size: '32W x 32L',
-    color: 'Midnight Navy',
-    price: 95,
-    quantity: 1,
-    image: 'https://static.vecteezy.com/system/resources/thumbnails/048/720/410/small_2x/men-s-leisure-leather-shoe-isolated-on-transparent-background-free-png.png',
-  },
-];
-
-export const addItem=(item)=>{
-  initialItems
-};
 
 const CartPage = () => {
-  const [items, setItems] = useState(initialItems);
+  const cartarray=useSelector((state)=>state.cart.value)
+  const [items, setItems] = useState(cartarray);
   const [promoCode, setPromoCode] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoMessage, setPromoMessage] = useState('');
@@ -74,7 +43,7 @@ const CartPage = () => {
     }
   };
 
-  const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subtotal = items.reduce((acc, item) => acc + item.price , 0);
   const discountAmount = (subtotal * discountPercent) / 100;
   const shipping = subtotal > 150 || items.length === 0 ? 0 : 15;
   const estimatedTax = Math.round(subtotal * 0.08);
